@@ -129,13 +129,19 @@ static bool touchpad_get_xy(int16_t *x, int16_t *y)
 	else if (xr > TFT_HOR_RES) xr = TFT_HOR_RES - 1;
 
 	x_raw = xr;
+
 	xDiff = x_raw > _x? (x_raw - _x): (_x - x_raw);
 	yDiff = y_raw > _y? (y_raw - _y): (_y - y_raw);
+
+
 
 	if (xDiff + yDiff > 5) {
 		_x = x_raw;
 		_y = y_raw;
 	}
+
+    // Inverted coordinate calculation
+    _y = TFT_VER_RES - 1 - y_raw;
 
 	/* Update the X and Y position */
 	*x = _x;
